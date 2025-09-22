@@ -1,6 +1,7 @@
 ---
 - name: Premier playbook
   hosts: debian-cli
+  gather_facts: false
 
   tasks:
     - name: Module ping
