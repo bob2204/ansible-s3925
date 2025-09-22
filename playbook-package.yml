@@ -9,3 +9,9 @@
       ansible.builtin.package:
         name: nginx
         state: present
+
+    - name: Configuration du service
+      ansible.builtin.systemd:
+        name: nginx
+        enabled: true
+        state: started
