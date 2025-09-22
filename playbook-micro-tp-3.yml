@@ -19,11 +19,20 @@
     - name: Configuration réseau de redis
       ansible.builtin.lineinfile:
         dest: /etc/redis/redis.conf
-        regex: ^bind 127.0.0.1
-        line: bind *
+        regex: ^bind
+        line: bind 192.168.56.246
         backup: true
+      notify:
+        - restart_redis
 
+    - name: Tâche bidon
+      ansible.builtin.debug:
+        msg: "Dernière tâche"
+
+  handlers:
     - name: Configuration du service
       ansible.builtin.systemd:
         name: redis
         state: restarted
+      listen:
+        - restart_redis
