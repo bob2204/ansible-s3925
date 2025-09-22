@@ -1,0 +1,7 @@
+---
+- name: Premier playbook
+  hosts: debian-cli
+
+  tasks:
+    - name: Module ping
+      ping:
