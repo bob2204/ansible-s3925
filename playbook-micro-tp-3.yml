@@ -25,6 +25,9 @@
       notify:
         - restart_redis
 
+    - name: On déclenche les handlers activés
+      ansible.builtin.meta: flush_handlers
+
     - name: Tâche bidon
       ansible.builtin.debug:
         msg: "Dernière tâche"
