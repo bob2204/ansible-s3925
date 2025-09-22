@@ -1,0 +1,11 @@
+---
+- name: Installation logicielle
+  hosts: all
+  gather_facts: false
+  become: true
+
+  tasks:
+    - name: Installation du serveur nginx
+      ansible.builtin.package:
+        name: nginx
+        state: present
