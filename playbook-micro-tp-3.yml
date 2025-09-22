@@ -1,0 +1,29 @@
+---
+- name: Micro-TP n°3 - Mise en œuvre de redis
+  hosts: fedora-cli
+  gather_facts: false
+  become: true
+
+  tasks:
+    - name: Installation de redis
+      ansible.builtin.package:
+        name: redis
+        state: present
+
+    - name: Configuration du service
+      ansible.builtin.systemd:
+        name: redis
+        enabled: true
+        state: started
+
+    - name: Configuration réseau de redis
+      ansible.builtin.lineinfile:
+        dest: /etc/redis/redis.conf
+        regex: ^bind 127.0.0.1
+        line: bind *
+        backup: true
+
+    - name: Configuration du service
+      ansible.builtin.systemd:
+        name: redis
+        state: restarted
