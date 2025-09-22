@@ -6,3 +6,4 @@
   tasks:
     - name: Module ping
       ansible.builtin.ping:
+        data: OK
