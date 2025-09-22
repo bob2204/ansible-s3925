@@ -4,4 +4,4 @@
 
   tasks:
     - name: Module ping
-      ping:
+      ansible.builtin.ping:
