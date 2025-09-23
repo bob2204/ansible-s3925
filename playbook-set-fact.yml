@@ -1,0 +1,20 @@
+---
+- name: Création de variable
+  hosts: all
+
+  tasks:
+    - name: module set_fact
+      ansible.builtin.set_fact:
+        stage: ansible
+
+    - name: Affichage de stage
+      ansible.builtin.debug:
+        msg: "Stage: {{ stage }}"
+
+- name: Acte-II
+  hosts: all
+
+  tasks:
+    - name: Affichage de stage
+      ansible.builtin.debug:
+        msg: "Stage: {{ stage }}"
