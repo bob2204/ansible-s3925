@@ -1,6 +1,7 @@
 ---
 - name: Ansible et les variables
   hosts: all
+  gather_facts: true
 
   vars:
     stage: Ansible
@@ -9,3 +10,7 @@
     - name: Chargement du fichier vars/stagiaires.yml
       ansible.builtin.include_vars:
         file: stagiaires.yml
+
+    - name: Affichage et module debug
+      ansible.builtin.debug:
+        msg: "Formation: {{ stage }}"
