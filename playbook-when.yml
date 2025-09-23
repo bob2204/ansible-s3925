@@ -28,3 +28,30 @@
     - name: Affichage variable result
       ansible.builtin.debug:
         msg: "Result: {{ result }}"
+
+    - name: Bloc rescue
+      block:
+        - name: Tâche I
+          ansible.builtin.debug:
+            msg: "Tâche I"
+
+        - name: Tâche II
+          ansible.builtin.debug:
+            msg: "Tâche II"
+          failed_when: true
+
+        - name: Tâche III
+          ansible.builtin.debug:
+            msg: "Tâche III"
+      rescue:
+        - name: Tâche de secours
+          ansible.builtin.debug:
+            msg: "SOS"
+      always:
+        - name: Tâche obligatoire
+          ansible.builtin.debug:
+            msg: "On passe toujours par ici"
+
+    - name: Tâche finale
+      ansible.builtin.debug:
+        msg: "Fini !"
