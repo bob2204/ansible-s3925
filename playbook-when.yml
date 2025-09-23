@@ -1,0 +1,11 @@
+---
+- name: Les clauses conditionnelles
+  hosts: all
+
+  tasks:
+    - name: Clause when
+      ansible.builtin.debug:
+        msg: "Glop glop !"
+      when:
+        - ansible_distribution | lower == 'debian'
+        - ansible_architecture == "x86_64" or ansible_distribution_version > 10
