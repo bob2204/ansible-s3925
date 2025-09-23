@@ -15,3 +15,7 @@
       when:
         - ansible_distribution | lower == 'debian'
         - ansible_architecture == "x86_64" or ansible_distribution_version > 10
+
+    - name: Tâche non idempotente
+      ansible.builtin.raw: date
+      changed_when: false
