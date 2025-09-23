@@ -1,0 +1,20 @@
+---
+- name: Micro-TP n°4
+  hosts: all
+  
+  tasks:
+    - name: Affichage de la variable ansible_host
+      ansible.builtin.debug:
+        msg: "IP : {{ ansible_host }}"
+
+    - name: Affichage du nom d'inventaire et de ansible_host
+      ansible.builtin.debug:
+        msg: "{{ inventory_hostname }}: {{ ansible_host }}"
+
+    - name: Affichage du nom d'inventaire, de la distribution et sa version
+      ansible.builtin.debug:
+        msg: "{{ inventory_hostname }}: {{ ansible_distribution }} - {{ ansible_distribution_version }}"
+
+    - name: Affichage de la variable http_package_name
+      ansible.builtin.debug:
+        msg: "{{ inventory_hostname }}: {{ http_package_name }}"
