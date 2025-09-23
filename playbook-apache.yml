@@ -1,0 +1,28 @@
+---
+- name: Installation logicielle
+  hosts: all
+  gather_facts: false
+  become: true
+
+  tasks:
+    - name: Désactivation du service nginx
+      ansible.builtin.systemd:
+        name: nginx
+        enabled: false
+        state: stopped
+
+    - name: Désinstallation du serveur nginx
+      ansible.builtin.package:
+        name: nginx
+        state: absent
+
+    - name: Installation du serveur apache
+      ansible.builtin.package:
+        name: "{{ http_package_name }}"
+        state: present
+
+    - name: Configuration du service
+      ansible.builtin.systemd:
+        name: "{{ http_package_name }}"
+        enabled: true
+        state: started
