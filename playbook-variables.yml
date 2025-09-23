@@ -4,6 +4,8 @@
 
   vars:
     stage: Ansible
-    stagiaires:
-      - Fabrice
-      - Franck
+
+  tasks:
+    - name: Chargement du fichier vars/stagiaires.yml
+      ansible.builtin.include_vars:
+        file: stagiaires.yml
