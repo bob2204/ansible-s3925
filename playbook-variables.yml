@@ -14,3 +14,7 @@
     - name: Affichage et module debug
       ansible.builtin.debug:
         msg: "Formation: {{ stage }}"
+
+    - name: Présentation de la notion de filtre
+      ansible.builtin.debug:
+        msg: "Durée {{ nb_jours }} jours"
