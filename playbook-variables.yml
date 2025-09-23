@@ -1,0 +1,9 @@
+---
+- name: Ansible et les variables
+  hosts: all
+
+  vars:
+    stage: Ansible
+    stagiaires:
+      - Fabrice
+      - Franck
