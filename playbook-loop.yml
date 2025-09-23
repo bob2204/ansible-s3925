@@ -1,0 +1,16 @@
+---
+- name: Clause loop
+  hosts: debian-cli
+  gather_facts: false
+
+  tasks:
+    - name: Clause loop
+      ansible.builtin.debug:
+        msg: "Formation n°{{ idx + 1 }}: {{ stage }}"
+      loop:
+        - Ansible
+        - Docker
+        - Kubernetes
+      loop_control:
+        index_var: idx
+        loop_var: stage
