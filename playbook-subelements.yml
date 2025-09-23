@@ -12,3 +12,9 @@
       ansible.builtin.debug:
         msg: "Login: {{ item.login }}"
       loop: "{{ logins }}"
+      tags: never
+
+    - name: Affichage pour chaque login de chacun des éléments du tableau groups
+      ansible.builtin.debug:
+        msg: "{{ item.0.login }} {{ item.1 }}"
+      loop: "{{ logins | subelements('groups') }}"
