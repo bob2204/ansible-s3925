@@ -1,0 +1,16 @@
+logins:
+  - login: bob
+    home: /home/bob
+    shell: /bin/bash
+    group: bob
+    groups:
+      - admin
+      - devops
+      - infos
+  - login: curt
+    home: /home/curt
+    shell: /bin/bash
+    group: curt
+    groups:
+      - devops
+      - cloud

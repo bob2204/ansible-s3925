@@ -1,0 +1,14 @@
+---
+- name: Boucles imbriquées
+  hosts: debian-cli
+  gather_facts: false
+
+  tasks:
+    - name: Chargement du fichier logins.yml
+      ansible.builtin.include_vars:
+        file: logins.yml
+
+    - name: Affichage des seuls logins
+      ansible.builtin.debug:
+        msg: "Login: {{ item.login }}"
+      loop: "{{ logins }}"
