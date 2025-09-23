@@ -1,0 +1,12 @@
+---
+- name: Micro-TP n°6
+  hosts: all
+
+  tasks:
+    - name: Affichage des interfaces réseau
+      ansible.builtin.debug:
+        msg: "Iface n°{{ idx + 1 }}: {{ item }}"
+      loop: "{{ ansible_interfaces | sort }}"
+      loop_control:
+        index_var: idx
+      when: item != 'lo'
