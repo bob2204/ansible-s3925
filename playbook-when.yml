@@ -19,3 +19,12 @@
     - name: Tâche non idempotente
       ansible.builtin.raw: date
       changed_when: false
+
+    - name: Tâche en échec (à ne pas gérer comme tel)
+      ansible.builtin.raw: grep curt /etc/passwd
+      register: result
+      failed_when: result.rc > 1
+
+    - name: Affichage variable result
+      ansible.builtin.debug:
+        msg: "Result: {{ result }}"
