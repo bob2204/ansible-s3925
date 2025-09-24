@@ -1,0 +1,13 @@
+---
+- name: Test appartenance group
+  hosts: all
+
+  tasks:
+    - name: Affichage de la variable groups
+      ansible.builtin.debug:
+        msg: "{{ groups }}"
+
+    - name: Tester si la cible est dans le groupe www
+      ansible.builtin.debug:
+        msg: "{{ inventory_hostname }} est dans le groupe www"
+      when: inventory_hostname in groups.www
