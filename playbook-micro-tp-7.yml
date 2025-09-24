@@ -13,3 +13,11 @@
       ansible.builtin.group:
         name: "{{ item.1 }}"
       loop: "{{ logins | subelements('groups') }}"
+
+    - name: Création des utilisateurs
+      ansible.builtin.user:
+        name: "{{ item.login }}"
+        home: "{{ item.home }}"
+        shell: "{{ item.shell }}"
+        groups: "{{ item.groups }}"
+      loop: "{{ logins }}"
