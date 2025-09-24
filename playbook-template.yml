@@ -1,0 +1,10 @@
+---
+- name: Module template
+  hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: Copie du template data.txt.j2
+      ansible.builtin.template:
+        src: data.txt.j2
+        dest: /tmp/data.txt
