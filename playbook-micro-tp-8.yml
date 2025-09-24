@@ -15,18 +15,11 @@
         enabled: true
         state: started
 
-    - name: Copie du fichier de configuration Nginx
-      ansible.builtin.copy:
+    - name: Copie templatée du fichier default.conf.ansible
+      ansible.builtin.template:
         src: default.conf.ansible
         dest: /etc/nginx/sites-available/default
-      notify:
-        - restart_nginx
-
-    - name: Adaptation du fichier de conf
-      ansible.builtin.lineinfile:
-        dest: /etc/nginx/sites-available/default
-        regex: localhost
-        line: "        fastcgi_pass   192.168.56.246:9000;"
+        mode: "0644"
       notify:
         - restart_nginx
 
