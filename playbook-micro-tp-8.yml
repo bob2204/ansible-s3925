@@ -1,0 +1,99 @@
+---
+- name: Installation/Configuration Nginx
+  hosts: www
+  become: true
+
+  tasks:
+    - name: Installation nginx
+      ansible.builtin.package:
+        name: nginx
+        state: present
+
+    - name: Configuration service nginx
+      ansible.builtin.systemd:
+        name: nginx
+        enabled: true
+        state: started
+
+    - name: Copie du fichier de configuration Nginx
+      ansible.builtin.copy:
+        src: default.conf.ansible
+        dest: /etc/nginx/sites-available/default
+      notify:
+        - restart_nginx
+
+    - name: Adaptation du fichier de conf
+      ansible.builtin.lineinfile:
+        dest: /etc/nginx/sites-available/default
+        regex: localhost
+        line: "        fastcgi_pass   192.168.56.246:9000;"
+      notify:
+        - restart_nginx
+
+    - name: Copie des fichier html
+      ansible.builtin.copy:
+        src: html/
+        dest: /var/www/html
+
+  handlers:
+    - name: Restart nginx
+      ansible.builtin.systemd:
+        name: nginx
+        state: restarted
+      listen:
+        - restart_nginx
+
+- name: Installation/Configuration PHP
+  hosts: php
+  become: true
+
+  tasks:
+    - name: Désactivation/Arrêt du service firewalld
+      ansible.builtin.systemd:
+        name: firewalld
+        state: stopped
+        enabled: false
+      when: ansible_distribution_file_variety | lower == "redhat"
+
+    - name: Installation php-fpm
+      ansible.builtin.package:
+        name: php-fpm
+        state: present
+
+    - name: Configuration service php-fpm
+      ansible.builtin.systemd:
+        name: php-fpm
+        enabled: true
+        state: started
+
+    - name: Configuration service php-fpm
+      ansible.builtin.lineinfile:
+        dest: /etc/php-fpm.d/www.conf
+        regex: ^listen =
+        line: listen = 192.168.56.246:9000
+        backup: true
+      notify:
+        - restart_php
+
+    - name: Configuration service php-fpm
+      ansible.builtin.lineinfile:
+        dest: /etc/php-fpm.d/www.conf
+        backrefs: true
+        regex: ^(listen.allowed.*)$
+        line: ;\1
+        backup: true
+      notify:
+        - restart_php
+
+    - name: Copie des fichier html
+      ansible.builtin.copy:
+        src: html/
+        dest: /var/www/html
+
+  handlers:
+    - name: Redémarrage de PHP
+      ansible.builtin.systemd:
+        name: php-fpm
+        state: restarted
+      listen:
+        - restart_php
