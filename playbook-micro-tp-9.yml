@@ -1,0 +1,9 @@
+---
+- name: Micro-TP n°9
+  hosts: all
+
+  tasks:
+    - name: Copie du template
+      ansible.builtin.template:
+        src: infos.j2
+        dest: /tmp/infos.txt

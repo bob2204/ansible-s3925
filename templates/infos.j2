@@ -1,0 +1,10 @@
+Hostname: {{ ansible_hostname }}
+Distribution:
+- Nom: {{ ansible_distribution }}
+- Version: {{ ansible_distribution_version }}
+Interfaces:
+{% for ipv4 in ansible_all_ipv4_addresses | sort %}
+{% if ipv4 | regex_search('^1[^0]') %}
+- IP n°{{ loop.index }}: {{ ipv4 }}
+{% endif %}
+{% endfor %}
