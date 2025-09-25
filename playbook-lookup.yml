@@ -1,0 +1,47 @@
+---
+- name: Quelques lookups
+  hosts: localhost
+
+  vars:
+    site_Toulouse: Ansible
+    site_Rennes: Autocad
+    site_Lyon: Office365
+
+    sites:
+      - Toulouse
+      - Lyon
+      - Rennes
+
+  tasks:
+    - name: DNS
+      ansible.builtin.debug:
+        msg: "kernel.org: {{ lookup('dig','kernel.org') }}"
+      tags: dns
+
+    - name: ENV
+      ansible.builtin.debug:
+        msg: "PATH: {{ lookup('env','PATH') }}"
+      tags: env
+
+    - name: File
+      ansible.builtin.debug:
+        msg: "data.txt: {{ (lookup('file','files/data.txt') | split('\n'))[-1] }}"
+      tags: file_1
+
+    - name: File
+      ansible.builtin.debug:
+        msg: "{{ item }}"
+      loop: "{{ lookup('file','files/data.txt') | split('\n') }}"
+      tags: file_2
+
+    - name: Template
+      ansible.builtin.debug:
+        msg: "{{ item }}"
+      loop: "{{ lookup('template','templates/infos.j2') | split ('\n') }}"
+      tags: tmpl
+
+    - name: Vars (eval)
+      ansible.builtin.debug:
+        msg: "{{ item }}: {{ lookup('vars','site_'+item) }} "
+      loop: "{{ sites }}"
+      tags: eval
