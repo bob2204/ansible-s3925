@@ -3,6 +3,7 @@
   hosts: all
   gather_facts: false
   become: true
+  no_log: true
 
   tasks:
     - name: Chargement du fichier logins.yml
@@ -20,4 +21,5 @@
         home: "{{ item.home }}"
         shell: "{{ item.shell }}"
         groups: "{{ item.groups }}"
+        password: "{{ item.password | password_hash('sha512') }}"
       loop: "{{ logins }}"
