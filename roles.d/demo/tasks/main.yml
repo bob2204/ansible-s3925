@@ -3,4 +3,4 @@
 
 - name: Tâche I du rôle demo
   ansible.builtin.debug:
-    msg: "Tâche I du rôle demo"
+    msg: "Tâche I du rôle demo: {{ stage }}"

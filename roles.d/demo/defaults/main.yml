@@ -1,2 +1,4 @@
 ---
 # defaults file for roles.d/demo
+
+stage: Ansible

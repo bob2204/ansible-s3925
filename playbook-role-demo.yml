@@ -3,4 +3,5 @@
   hosts: all
 
   roles:
-    - demo
+    - role: demo
+      stage: Docker
