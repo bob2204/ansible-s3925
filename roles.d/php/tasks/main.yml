@@ -1,0 +1,44 @@
+---
+# tasks file for roles.d/php
+- name: Désactivation/Arrêt du service firewalld
+  ansible.builtin.systemd:
+    name: firewalld
+    state: stopped
+    enabled: false
+  when: ansible_distribution_file_variety | lower == "redhat"
+
+- name: Installation php-fpm
+  ansible.builtin.package:
+    name: php-fpm
+    state: present
+
+- name: Configuration service php-fpm
+  ansible.builtin.systemd:
+    name: php-fpm
+    enabled: true
+    state: started
+
+- name: Configuration service php-fpm
+  ansible.builtin.lineinfile:
+    dest: /etc/php-fpm.d/www.conf
+    regex: ^listen =
+    line: listen = 192.168.56.246:9000
+    backup: true
+  notify:
+    - restart_php
+
+- name: Configuration service php-fpm
+  ansible.builtin.lineinfile:
+    dest: /etc/php-fpm.d/www.conf
+    backrefs: true
+    regex: ^(listen.allowed.*)$
+    line: ;\1
+    backup: true
+  notify:
+    - restart_php
+
+- name: Copie des fichier html
+  ansible.builtin.copy:
+    src: html/
+    dest: /var/www/html
+    mode: "0644"

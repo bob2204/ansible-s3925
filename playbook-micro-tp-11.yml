@@ -1,0 +1,11 @@
+---
+- name: Installation NGINX/PHP
+  hosts: www,php
+  become: true
+
+  roles:
+    - role: nginx
+      when: inventory_hostname in groups.www
+
+    - role: php
+      when: inventory_hostname in groups.php
