@@ -1,0 +1,8 @@
+---
+- name: Test pre-commit
+  hosts: all
+
+  tasks:
+    - name: Tâche de test
+      ansible.builtin.debug:
+        msg: "Coucou"
