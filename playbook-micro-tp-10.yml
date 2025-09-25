@@ -1,0 +1,9 @@
+---
+- name: Micro-TP n°10
+  hosts: all
+
+  tasks:
+    - name: Liste des interfaces
+      ansible.builtin.template:
+        src: infos-ip.j2
+        dest: /tmp/infos-ip

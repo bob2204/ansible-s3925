@@ -1,0 +1,7 @@
+Hostname: {{ ansible_hostname }}
+Interfaces:
+{% for iface in ansible_interfaces | sort %}
+{% if iface != 'lo' %}
+- {{ iface }}
+{% endif %}
+{% endfor %}
