@@ -5,4 +5,5 @@
   tasks:
     - name: Tâche de test
       ansible.builtin.debug:
-        msg: "Coucou"
+        msg: "Coucou" 
+
