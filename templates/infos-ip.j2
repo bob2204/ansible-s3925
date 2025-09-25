@@ -2,6 +2,6 @@ Hostname: {{ ansible_hostname }}
 Interfaces:
 {% for iface in ansible_interfaces | sort %}
 {% if iface != 'lo' %}
-- {{ iface }}
+- {{ iface }}: {{ lookup('vars','ansible_'+iface).ipv4.address }}
 {% endif %}
 {% endfor %}
