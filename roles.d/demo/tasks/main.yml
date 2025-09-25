@@ -1,0 +1,6 @@
+---
+# tasks file for roles.d/demo
+
+- name: Tâche I du rôle demo
+  ansible.builtin.debug:
+    msg: "Tâche I du rôle demo"

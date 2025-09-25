@@ -1,0 +1,6 @@
+---
+- name: Utilisation du rôle demo
+  hosts: all
+
+  roles:
+    - demo
