@@ -25,6 +25,15 @@
       notify:
         - restart_redis
 
+    - name: Configuration réseau de redis
+      ansible.builtin.lineinfile:
+        dest: /etc/redis/redis.conf
+        regex: ^# *requirepass
+        line: requirepass azerty
+        backup: true
+      notify:
+        - restart_redis
+
     - name: On déclenche les handlers activés
       ansible.builtin.meta: flush_handlers
 
