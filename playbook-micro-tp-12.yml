@@ -1,0 +1,44 @@
+---
+- name: Micro-TP n°12
+  hosts: all
+
+  tasks:
+    - name: Liste des interfaces
+      ansible.builtin.template:
+        src: infos-ip.j2
+        dest: "/tmp/infos-ip-{{ inventory_hostname }}"
+      delegate_to: localhost
+
+    - name: Suppression du fichier
+      ansible.builtin.file:
+        dest: /var/www/html/infos-p.html
+        state: absent
+      when: inventory_hostname == 'debian-cli'
+      become: true
+
+    - name: Concaténation
+      ansible.builtin.lineinfile:
+        dest: /var/www/html/infos-ip-global.txt
+        line: "{{ lookup('file','/tmp/infos-ip-'+inventory_hostname) }}"
+        create: true
+      delegate_to: debian-cli
+      become: true
+
+- name: Idem mais avec une tâche de moins
+  hosts: all
+  become: true
+  tags: acte_2
+
+  tasks:
+    - name: Suppression du fichier
+      ansible.builtin.file:
+        dest: /var/www/html/infos-ip.html
+        state: absent
+      when: inventory_hostname == 'debian-cli'
+
+    - name: En une seule tâche
+      ansible.builtin.lineinfile:
+        dest: /var/www/html/infos-ip.html
+        line: "{{ lookup('template','templates/infos-ip.j2') | regex_replace('\n','<br>\n') }}"
+        create: true
+      delegate_to: debian-cli
