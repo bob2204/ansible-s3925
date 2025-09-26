@@ -1,0 +1,4 @@
+- name: Tâche incluse
+  ansible.builtin.debug:
+    msg: "Tâche incluse"
+  tags: inside
