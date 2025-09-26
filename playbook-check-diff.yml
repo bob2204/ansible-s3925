@@ -1,0 +1,15 @@
+---
+- name: Options check et diff
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Création du login alice
+      ansible.builtin.user:
+        name: alice
+
+    - name: Copie d'un fichier
+      ansible.builtin.copy:
+        src: data.txt
+        dest: /tmp
+        owner: alice
