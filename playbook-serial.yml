@@ -1,0 +1,21 @@
+---
+- name: clause serial
+  hosts: all
+  serial:
+    - 1
+    - 4
+    - 100%
+
+  tasks:
+    - name: Tâche I
+      ansible.builtin.wait_for:
+        timeout: "{{ 5 | random }}"
+
+    - name: Tâche II
+      ansible.builtin.wait_for:
+        timeout: "{{ 5 | random }}"
+      failed_when: true
+
+    - name: Tâche III
+      ansible.builtin.wait_for:
+        timeout: "{{ 5 | random }}"
